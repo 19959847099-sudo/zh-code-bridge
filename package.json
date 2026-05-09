@@ -35,6 +35,23 @@
         "scopeName": "source.zhjs",
         "path": "./syntaxes/zhjs.tmLanguage.json"
       }
+    ],
+    "commands": [
+      {
+        "command": "zhCodeBridge.runCurrentFile",
+        "title": "ZhCode: Run Current File",
+        "category": "ZhCode"
+      },
+      {
+        "command": "zhCodeBridge.generateJavaScript",
+        "title": "ZhCode: Generate JavaScript",
+        "category": "ZhCode"
+      },
+      {
+        "command": "zhCodeBridge.showGeneratedJavaScript",
+        "title": "ZhCode: Show Generated JavaScript",
+        "category": "ZhCode"
+      }
     ]
   },
   "scripts": {

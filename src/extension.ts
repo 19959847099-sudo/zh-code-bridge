@@ -1,6 +1,8 @@
 import * as vscode from "vscode";
+import { registerZhCodeCommands } from "./vscode/commands";
 
-export function activate(_context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) {
+  registerZhCodeCommands(context);
   console.log("ZhCode Bridge is now active.");
 }
 
