@@ -3,6 +3,7 @@ import * as vscode from "vscode";
 import { generateJavaScriptFromZhjs } from "../compiler/generate";
 import { getGeneratedJsPath, isZhjsFile, writeGeneratedJavaScriptFile } from "../utils/file";
 import { runJavaScriptFile } from "../utils/node";
+import { formatJavaScriptErrorWithExplanation } from "./diagnostics";
 import { getZhCodeOutputChannel, showOutputError, showOutputMessage } from "./output";
 
 export function registerZhCodeCommands(context: vscode.ExtensionContext): void {
@@ -26,7 +27,7 @@ export function registerZhCodeCommands(context: vscode.ExtensionContext): void {
         channel.appendLine(result.stdout.trimEnd() || "<empty>");
         channel.appendLine("");
         channel.appendLine("stderr:");
-        channel.appendLine(result.stderr.trimEnd() || "<empty>");
+        channel.appendLine(formatRunStderr(result.stderr, result.exitCode));
         channel.appendLine("");
         channel.appendLine("exitCode:");
         channel.appendLine(String(result.exitCode));
@@ -106,6 +107,20 @@ function formatError(error: unknown): string {
   }
 
   return String(error);
+}
+
+function formatRunStderr(stderr: string, exitCode: number | null): string {
+  const trimmed = stderr.trimEnd();
+
+  if (exitCode === 0) {
+    return trimmed || "<empty>";
+  }
+
+  if (!trimmed) {
+    return "<empty>";
+  }
+
+  return formatJavaScriptErrorWithExplanation(trimmed);
 }
 
 interface GeneratedFileResult {

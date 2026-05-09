@@ -68,15 +68,23 @@
       "patterns": [
         {
           "name": "keyword.control.zhjs",
-          "match": "\\b(如果|否则|函数|返回|声明变量|声明常量)\\b"
+          "match": "(声明变量|声明常量|旧式变量|否则如果|如果|否则|分支|情况|默认|跳出|循环|当|执行|继续|函数|返回|类|新建|当前对象|继承|父类|构造函数|尝试|捕获|最终|抛出|异步|等待|导入|导出|从)"
         },
         {
           "name": "constant.language.zhjs",
-          "match": "\\b(真|假|空|未定义)\\b"
+          "match": "(不是数字|无穷大|未定义|真|假|空)"
+        },
+        {
+          "name": "keyword.operator.word.zhjs",
+          "match": "(删除属性|实例于|类型|属于)"
         },
         {
           "name": "support.function.zhjs",
-          "match": "\\b打印(?=\\s*\\()"
+          "match": "(输出错误|解析JSON|转为JSON|随机数|当前时间|打印|警告)(?=\\s*\\()"
+        },
+        {
+          "name": "support.function.method.zhjs",
+          "match": "(转大写|转小写|去空格|开始于|结束于|开头添加|开头移除|添加|筛选|映射|遍历|包含|切片)(?=\\s*\\()"
         }
       ]
     }
