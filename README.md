@@ -7,12 +7,12 @@ ZhCode Bridge 不是一门新的中文编程语言。它是一个 VS Code 插件
 
 ## 核心规则
 
-- 符号不变：继续使用 JavaScript 原本的括号、点号、引号、分号、逗号和运算符。
+- 符号不变：继续使用 JavaScript 原本的 `() {}`、点号、引号、分号、逗号和运算符。
 - 语法结构不变：只替换入口词，不设计自然语言式中文语法。
 - `.zhjs` 不直接运行。
 - 真正运行的是生成后的标准 `.js` 文件。
 
-## 示例
+## `.zhjs`
 
 ```js
 函数 判断成绩(分数) {
@@ -26,4 +26,52 @@ ZhCode Bridge 不是一门新的中文编程语言。它是一个 VS Code 插件
 打印(判断成绩(80));
 ```
 
-P1-S 当前只提供插件工程骨架、`.zhjs` 语言识别、基础语言配置和基础高亮。转译、运行命令、补全和 Hover 将在后续轮次逐步实现。
+## 生成后的 JavaScript
+
+```js
+function 判断成绩(分数) {
+  if (分数 >= 60) {
+    return "通过";
+  } else {
+    return "不通过";
+  }
+}
+
+console.log(判断成绩(80));
+```
+
+## 当前 Prototype 能力
+
+- 识别 `.zhjs` 文件为 ZhCode / zhjs
+- 基础入口词高亮
+- 中文入口词 Hover 解释
+- 中文入口词 Completion 补全
+- 生成同名 `.js`
+- 运行生成后的 `.js`
+- Output 面板显示 stdout / stderr / exitCode
+- 常见 JavaScript 错误的基础中文解释，同时保留原始英文错误
+
+## VS Code 命令
+
+- `ZhCode: Generate JavaScript`：从当前 `.zhjs` 生成同名 `.js`
+- `ZhCode: Run Current File`：先生成 `.js`，再运行生成后的 `.js`
+- `ZhCode: Show Generated JavaScript`：查看当前 `.zhjs` 生成后的标准 JavaScript
+
+## Examples
+
+- `examples/score.zhjs`：函数、条件判断、返回、打印
+- `examples/string-array.zhjs`：字符串方法、数组方法、点号方法调用
+- `examples/json-math.zhjs`：JSON、Math、Date、对象入口
+- `examples/error.zhjs`：错误解释能力
+
+`examples/*.js` 是插件生成产物，不进入 Git。
+
+## Development
+
+```powershell
+npm install
+npm run compile
+npm test
+```
+
+本项目当前处于 V0.1 Prototype 收口状态，下一阶段会进入 Beta 调试与打磨。
