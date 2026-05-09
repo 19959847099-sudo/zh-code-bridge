@@ -1,0 +1,84 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "ZhCode",
+  "scopeName": "source.zhjs",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#strings"
+    },
+    {
+      "include": "#entryWords"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.zhjs",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.zhjs",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "name": "string.quoted.double.zhjs",
+          "begin": "\"",
+          "end": "\"",
+          "patterns": [
+            {
+              "name": "constant.character.escape.zhjs",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.quoted.single.zhjs",
+          "begin": "'",
+          "end": "'",
+          "patterns": [
+            {
+              "name": "constant.character.escape.zhjs",
+              "match": "\\\\."
+            }
+          ]
+        },
+        {
+          "name": "string.template.zhjs",
+          "begin": "`",
+          "end": "`",
+          "patterns": [
+            {
+              "name": "constant.character.escape.zhjs",
+              "match": "\\\\."
+            }
+          ]
+        }
+      ]
+    },
+    "entryWords": {
+      "patterns": [
+        {
+          "name": "keyword.control.zhjs",
+          "match": "\\b(如果|否则|函数|返回|声明变量|声明常量)\\b"
+        },
+        {
+          "name": "constant.language.zhjs",
+          "match": "\\b(真|假|空|未定义)\\b"
+        },
+        {
+          "name": "support.function.zhjs",
+          "match": "\\b打印(?=\\s*\\()"
+        }
+      ]
+    }
+  }
+}

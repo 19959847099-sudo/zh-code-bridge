@@ -1,0 +1,48 @@
+{
+  "name": "zh-code-bridge",
+  "displayName": "ZhCode Bridge",
+  "description": "Use Chinese entry words to learn real JavaScript.",
+  "version": "0.0.1",
+  "publisher": "adrian-hu",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onLanguage:zhjs"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "zhjs",
+        "aliases": [
+          "ZhCode",
+          "zhjs"
+        ],
+        "extensions": [
+          ".zhjs"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "zhjs",
+        "scopeName": "source.zhjs",
+        "path": "./syntaxes/zhjs.tmLanguage.json"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.5"
+  }
+}
