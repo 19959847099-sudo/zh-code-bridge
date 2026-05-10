@@ -8,3 +8,6 @@ tsconfig.json
 *.ts
 node_modules/**
 examples/*.js
+*.vsix
+docs/**
+ZhCode_Bridge_*.md
