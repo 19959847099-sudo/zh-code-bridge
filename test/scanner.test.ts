@@ -32,6 +32,16 @@ describe("scanSourceSegments", () => {
     expect(segments.some((segment) => segment.kind === "string" && segment.text.includes("返回"))).toBe(true);
   });
 
+  it("keeps template interpolation inside the protected string segment", () => {
+    const segments = scanSourceSegments("打印(`结果是 ${判断成绩(80)}`);");
+
+    expect(segments).toEqual([
+      { kind: "code", text: "打印(" },
+      { kind: "string", text: "`结果是 ${判断成绩(80)}`" },
+      { kind: "code", text: ");" }
+    ]);
+  });
+
   it("protects line comments", () => {
     const segments = scanSourceSegments("// 如果 返回 打印\n打印(\"ok\");");
 
@@ -44,5 +54,25 @@ describe("scanSourceSegments", () => {
 
     expect(segments[0]).toEqual({ kind: "comment", text: "/* 如果 返回 打印 */" });
     expect(segments.map((segment) => (segment.kind === "code" ? segment.text : "")).join("")).not.toContain("返回");
+  });
+
+  it("does not crash on an unclosed string", () => {
+    const segments = scanSourceSegments("打印(\"如果 返回");
+
+    expect(segments).toEqual([
+      { kind: "code", text: "打印(" },
+      { kind: "string", text: "\"如果 返回" }
+    ]);
+  });
+
+  it("does not crash on an unclosed block comment", () => {
+    const segments = scanSourceSegments("打印(\"ok\");\n/* 如果 返回");
+
+    expect(segments).toEqual([
+      { kind: "code", text: "打印(" },
+      { kind: "string", text: "\"ok\"" },
+      { kind: "code", text: ");\n" },
+      { kind: "comment", text: "/* 如果 返回" }
+    ]);
   });
 });

@@ -1,7 +1,9 @@
 import * as fs from "fs/promises";
+import * as os from "os";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
 import { generateJavaScriptFromZhjs } from "../src/compiler/generate";
+import { runJavaScriptFile } from "../src/utils/node";
 
 const examplesDir = path.join(process.cwd(), "examples");
 
@@ -35,8 +37,51 @@ describe("examples", () => {
     expect(generated).toContain("Math.floor(Math.random() * 100)");
     expect(generated).toContain("console.log(Date.now());");
   });
+
+  it("runs score.zhjs generated JavaScript successfully", async () => {
+    const result = await runGeneratedExample("score.zhjs");
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("通过");
+    expect(result.stderr).toBe("");
+  });
+
+  it("runs string-array.zhjs generated JavaScript successfully", async () => {
+    const result = await runGeneratedExample("string-array.zhjs");
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("ADRIAN");
+    expect(result.stdout).toContain("100");
+    expect(result.stderr).toBe("");
+  });
+
+  it("runs json-math.zhjs generated JavaScript successfully", async () => {
+    const result = await runGeneratedExample("json-math.zhjs");
+
+    expect(result.exitCode).toBe(0);
+    expect(result.stdout).toContain("名字");
+    expect(result.stderr).toBe("");
+  });
+
+  it("treats error.zhjs as an expected failing example", async () => {
+    const result = await runGeneratedExample("error.zhjs");
+
+    expect(result.exitCode).not.toBe(0);
+    expect(result.stderr).toContain("ReferenceError");
+    expect(result.stderr).toContain("尚未定义的变量");
+  });
 });
 
 async function readExample(fileName: string): Promise<string> {
   return fs.readFile(path.join(examplesDir, fileName), "utf8");
+}
+
+async function runGeneratedExample(fileName: string) {
+  const source = await readExample(fileName);
+  const generated = generateJavaScriptFromZhjs(source, { sourceFileName: fileName });
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), "zh-code-bridge-example-"));
+  const jsPath = path.join(directory, fileName.replace(/\.zhjs$/u, ".js"));
+
+  await fs.writeFile(jsPath, generated, "utf8");
+  return runJavaScriptFile(jsPath);
 }
