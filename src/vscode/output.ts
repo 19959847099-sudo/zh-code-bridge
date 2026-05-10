@@ -18,3 +18,22 @@ export function showOutputError(message: string): void {
   channel.appendLine(message);
   channel.show(true);
 }
+
+export function formatOutputSection(title: string, lines: OutputLine[]): string {
+  const body = lines
+    .map((line) => {
+      if (typeof line === "string") {
+        return line;
+      }
+
+      return `${line.label}: ${line.value}`;
+    })
+    .join("\n");
+
+  return `[ZhCode Bridge] ${title}\n${body}`;
+}
+
+export type OutputLine = string | {
+  label: string;
+  value: string;
+};

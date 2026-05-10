@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  createUserFacingErrorMessage,
   explainJavaScriptError,
   formatJavaScriptErrorWithExplanation
 } from "../src/vscode/diagnostics";
@@ -36,5 +37,23 @@ describe("formatJavaScriptErrorWithExplanation", () => {
     const errorText = "RangeError: invalid array length";
 
     expect(formatJavaScriptErrorWithExplanation(errorText)).toBe(errorText);
+  });
+});
+
+describe("createUserFacingErrorMessage", () => {
+  it("summarizes non-zhjs command errors", () => {
+    expect(createUserFacingErrorMessage(new Error("当前文件不是 .zhjs 文件。"))).toContain("当前文件不是 .zhjs");
+  });
+
+  it("summarizes overwrite protection errors", () => {
+    const message = createUserFacingErrorMessage(
+      new Error("目标 .js 文件已存在，且看起来不是 ZhCode Bridge 生成文件。为避免覆盖用户代码，已停止生成。")
+    );
+
+    expect(message).toContain("为避免覆盖你的代码");
+  });
+
+  it("uses a short fallback for unexpected failures", () => {
+    expect(createUserFacingErrorMessage(new Error("Unexpected failure"))).toContain("详细信息已写入 Output 面板");
   });
 });

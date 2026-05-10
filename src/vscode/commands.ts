@@ -3,8 +3,16 @@ import * as vscode from "vscode";
 import { generateJavaScriptFromZhjs } from "../compiler/generate";
 import { getGeneratedJsPath, isZhjsFile, writeGeneratedJavaScriptFile } from "../utils/file";
 import { runJavaScriptFile } from "../utils/node";
-import { formatJavaScriptErrorWithExplanation } from "./diagnostics";
-import { getZhCodeOutputChannel, showOutputError, showOutputMessage } from "./output";
+import {
+  createUserFacingErrorMessage,
+  formatJavaScriptErrorWithExplanation
+} from "./diagnostics";
+import {
+  formatOutputSection,
+  getZhCodeOutputChannel,
+  showOutputError,
+  showOutputMessage
+} from "./output";
 
 export function registerZhCodeCommands(context: vscode.ExtensionContext): void {
   context.subscriptions.push(
@@ -20,18 +28,19 @@ export function registerZhCodeCommands(context: vscode.ExtensionContext): void {
         const result = await runJavaScriptFile(generated.jsPath);
         const channel = getZhCodeOutputChannel();
 
-        channel.appendLine("[ZhCode Bridge] Running:");
-        channel.appendLine(generated.jsPath);
-        channel.appendLine("");
-        channel.appendLine("stdout:");
-        channel.appendLine(result.stdout.trimEnd() || "<empty>");
-        channel.appendLine("");
-        channel.appendLine("stderr:");
-        channel.appendLine(formatRunStderr(result.stderr, result.exitCode));
-        channel.appendLine("");
-        channel.appendLine("exitCode:");
-        channel.appendLine(String(result.exitCode));
-        channel.appendLine("");
+        channel.appendLine(formatOutputSection("Run Current File", [
+          { label: "Source", value: generated.zhjsPath },
+          { label: "Running", value: generated.jsPath },
+          "",
+          "stdout:",
+          result.stdout.trimEnd() || "<empty>",
+          "",
+          "stderr:",
+          formatRunStderr(result.stderr, result.exitCode),
+          "",
+          { label: "exitCode", value: String(result.exitCode) },
+          ""
+        ]));
         channel.show(true);
 
         if (result.exitCode === 0) {
@@ -72,7 +81,12 @@ async function generateFromActiveEditor(): Promise<GeneratedFileResult> {
   });
 
   await writeGeneratedJavaScriptFile(jsPath, generated);
-  showOutputMessage(`[ZhCode Bridge] Generated JavaScript:\n${jsPath}\n`);
+  showOutputMessage(formatOutputSection("Generate JavaScript", [
+    { label: "Source", value: zhjsPath },
+    { label: "Output", value: jsPath },
+    { label: "Status", value: "success" },
+    ""
+  ]));
 
   return { zhjsPath, jsPath };
 }
@@ -97,7 +111,7 @@ async function runCommand(name: string, command: () => Promise<void>): Promise<v
   } catch (error) {
     const message = formatError(error);
     showOutputError(`[ZhCode Bridge] ${name} failed:\n${message}\n`);
-    vscode.window.showErrorMessage(message);
+    vscode.window.showErrorMessage(createUserFacingErrorMessage(error));
   }
 }
 

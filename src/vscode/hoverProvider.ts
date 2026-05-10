@@ -63,7 +63,8 @@ export function createHoverMarkdown(entries: ZhCodeEntry[]): vscode.MarkdownStri
     markdown.appendMarkdown(`**${entry.zh}**\n\n`);
     markdown.appendMarkdown(`对应 JavaScript：\`${entry.target}\`\n\n`);
     markdown.appendMarkdown(`类型：\`${entry.kind}\`\n\n`);
-    markdown.appendMarkdown("作用：\n");
+    markdown.appendMarkdown(`适用场景：\`${entry.category}\`\n\n`);
+    markdown.appendMarkdown("说明：\n");
     markdown.appendMarkdown(`${entry.description}\n\n`);
 
     if (entry.exampleZh || entry.exampleJs) {

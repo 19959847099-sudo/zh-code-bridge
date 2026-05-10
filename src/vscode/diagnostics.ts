@@ -37,3 +37,29 @@ export function formatJavaScriptErrorWithExplanation(errorText: string): string 
     errorText
   ].join("\n");
 }
+
+export function createUserFacingErrorMessage(error: unknown): string {
+  const message = getErrorMessage(error);
+
+  if (message.includes("不是 .zhjs") || message.includes("not a .zhjs")) {
+    return "当前文件不是 .zhjs，请打开一个 ZhCode 文件后再执行命令。";
+  }
+
+  if (message.includes("没有活动编辑器") || message.includes("No active editor")) {
+    return "请先打开一个 .zhjs 文件。";
+  }
+
+  if (message.includes("为避免覆盖用户代码") || message.includes("为避免覆盖你的代码")) {
+    return "目标 .js 文件看起来不是 ZhCode Bridge 生成的文件。为避免覆盖你的代码，已停止生成。";
+  }
+
+  return "ZhCode Bridge 命令执行失败，详细信息已写入 Output 面板。";
+}
+
+function getErrorMessage(error: unknown): string {
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return String(error);
+}
