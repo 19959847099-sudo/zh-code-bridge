@@ -2,7 +2,7 @@
   "name": "zh-code-bridge",
   "displayName": "ZhCode Bridge",
   "description": "Use Chinese entry words to learn real JavaScript.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "adrian-hu",
   "license": "MIT",
   "repository": {
