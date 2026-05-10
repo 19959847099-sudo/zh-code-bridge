@@ -80,4 +80,22 @@ npm run compile
 npm test
 ```
 
-本项目当前处于 V0.1 Prototype 收口状态，下一阶段会进入 Beta 调试与打磨。
+## Local Debugging
+
+在 VS Code 中打开项目目录后，按 `F5` 启动 Extension Development Host。  
+在新窗口中打开 `examples/score.zhjs`，可以执行：
+
+- `ZhCode: Generate JavaScript`
+- `ZhCode: Run Current File`
+- `ZhCode: Show Generated JavaScript`
+
+## Package And Install
+
+```powershell
+npx @vscode/vsce package
+```
+
+打包成功后会生成 `.vsix` 文件。它是本地安装包，不进入 Git。  
+在 VS Code 中可以通过 Extensions 视图的 `Install from VSIX...` 安装。
+
+本项目当前处于 V0.1 Beta 收口状态，下一阶段会进入 Release 收口。
