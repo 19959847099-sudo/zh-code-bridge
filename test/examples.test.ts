@@ -2,7 +2,9 @@ import * as fs from "fs/promises";
 import * as os from "os";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
+import { zhCodeEntries } from "../src/compiler/entries";
 import { generateJavaScriptFromZhjs } from "../src/compiler/generate";
+import { transformZhjsToJs } from "../src/compiler/transform";
 import { runJavaScriptFile } from "../src/utils/node";
 
 const examplesDir = path.join(process.cwd(), "examples");
@@ -69,6 +71,31 @@ describe("examples", () => {
     expect(result.exitCode).not.toBe(0);
     expect(result.stderr).toContain("ReferenceError");
     expect(result.stderr).toContain("尚未定义的变量");
+  });
+});
+
+describe("entry examples", () => {
+  it("keeps entry examples aligned with actual transform output", () => {
+    for (const entry of zhCodeEntries) {
+      if (!entry.exampleZh || !entry.exampleJs) {
+        continue;
+      }
+
+      expect(transformZhjsToJs(entry.exampleZh), entry.zh).toBe(entry.exampleJs);
+    }
+  });
+
+  it("keeps all entries structured for docs, hover, and completion", () => {
+    const kinds = new Set(zhCodeEntries.map((entry) => entry.kind));
+
+    expect(kinds).toEqual(new Set(["keyword", "literal", "operatorWord", "apiFunction", "method"]));
+
+    for (const entry of zhCodeEntries) {
+      expect(entry.zh.trim(), "zh").not.toBe("");
+      expect(entry.target.trim(), entry.zh).not.toBe("");
+      expect(entry.category.trim(), entry.zh).not.toBe("");
+      expect(entry.description.trim(), entry.zh).not.toBe("");
+    }
   });
 });
 

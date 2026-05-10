@@ -293,10 +293,10 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "keyword",
     category: "async",
     level: "basic",
-    description: "声明一个可以使用 await 的异步函数。",
+    description: "声明异步函数，函数内部可以使用 等待 / await 处理异步结果。",
     exampleZh: "异步 函数 读取数据() {\n}",
     exampleJs: "async function 读取数据() {\n}",
-    completion: "异步 "
+    completion: "异步 函数 ${1:函数名}(${2:参数}) {\n  ${3:// 代码}\n}"
   },
   {
     zh: "等待",
@@ -458,7 +458,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "console",
     level: "foundation",
-    description: "向控制台输出普通信息。",
+    description: "函数调用入口：向控制台输出普通信息。",
     exampleZh: "打印(\"你好\");",
     exampleJs: "console.log(\"你好\");",
     completion: "打印(${1:内容});"
@@ -469,7 +469,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "console",
     level: "basic",
-    description: "向控制台输出警告信息。",
+    description: "函数调用入口：向控制台输出警告信息。",
     exampleZh: "警告(\"请检查输入\");",
     exampleJs: "console.warn(\"请检查输入\");",
     completion: "警告(${1:内容});"
@@ -480,7 +480,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "console",
     level: "basic",
-    description: "向控制台输出错误信息。",
+    description: "函数调用入口：向控制台输出错误信息。",
     exampleZh: "输出错误(\"运行失败\");",
     exampleJs: "console.error(\"运行失败\");",
     completion: "输出错误(${1:内容});"
@@ -612,7 +612,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "json",
     level: "basic",
-    description: "把 JSON 字符串解析成 JavaScript 值。",
+    description: "函数调用入口：把 JSON 字符串解析成 JavaScript 值。",
     exampleZh: "声明常量 数据 = 解析JSON(文本);",
     exampleJs: "const 数据 = JSON.parse(文本);",
     completion: "解析JSON(${1:文本});"
@@ -623,7 +623,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "json",
     level: "basic",
-    description: "把 JavaScript 值转换成 JSON 字符串。",
+    description: "函数调用入口：把 JavaScript 值转换成 JSON 字符串。",
     exampleZh: "声明常量 文本 = 转为JSON(数据);",
     exampleJs: "const 文本 = JSON.stringify(数据);",
     completion: "转为JSON(${1:值});"
@@ -634,7 +634,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "math",
     level: "foundation",
-    description: "生成一个 0 到 1 之间的随机小数。",
+    description: "函数调用入口：生成一个 0 到 1 之间的随机小数。",
     exampleZh: "声明常量 数 = 随机数();",
     exampleJs: "const 数 = Math.random();",
     completion: "随机数()"
@@ -744,7 +744,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "apiFunction",
     category: "date",
     level: "basic",
-    description: "获取当前时间戳。",
+    description: "函数调用入口：获取当前时间戳。",
     exampleZh: "声明常量 时间戳 = 当前时间();",
     exampleJs: "const 时间戳 = Date.now();",
     completion: "当前时间()"
@@ -755,7 +755,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "string",
     level: "foundation",
-    description: "把字符串转成大写。",
+    description: "点号方法入口：把字符串转成大写。",
     exampleZh: "名字.转大写()",
     exampleJs: "名字.toUpperCase()",
     completion: "转大写()"
@@ -788,7 +788,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "string",
     level: "foundation",
-    description: "判断字符串中是否包含指定内容。",
+    description: "点号方法入口：判断字符串中是否包含指定内容。",
     exampleZh: "名字.包含(\"A\")",
     exampleJs: "名字.includes(\"A\")",
     completion: "包含(${1:内容})"
@@ -821,7 +821,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "string",
     level: "foundation",
-    description: "截取字符串中的一部分。",
+    description: "点号方法入口：截取字符串中的一部分。",
     exampleZh: "名字.切片(0, 2)",
     exampleJs: "名字.slice(0, 2)",
     completion: "切片(${1:开始}, ${2:结束})"
@@ -865,7 +865,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "array",
     level: "foundation",
-    description: "向数组末尾添加一个或多个元素。",
+    description: "点号方法入口：向数组末尾添加一个或多个元素。",
     exampleZh: "分数列表.添加(100)",
     exampleJs: "分数列表.push(100)",
     completion: "添加(${1:元素})"
@@ -909,7 +909,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "array",
     level: "foundation",
-    description: "判断数组中是否包含指定元素。",
+    description: "点号方法入口：判断数组中是否包含指定元素。",
     exampleZh: "分数列表.包含(80)",
     exampleJs: "分数列表.includes(80)",
     completion: "包含(${1:元素})"
@@ -942,7 +942,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "array",
     level: "foundation",
-    description: "筛选出数组中所有符合条件的元素。",
+    description: "点号方法入口：筛选出数组中所有符合条件的元素。",
     exampleZh: "分数列表.筛选((分数) => 分数 >= 60)",
     exampleJs: "分数列表.filter((分数) => 分数 >= 60)",
     completion: "筛选((${1:元素}) => ${2:条件})"
@@ -1008,7 +1008,7 @@ export const zhCodeEntries: ZhCodeEntry[] = [
     kind: "method",
     category: "array",
     level: "foundation",
-    description: "截取数组中的一部分，得到一个新数组。",
+    description: "点号方法入口：截取数组中的一部分，得到一个新数组。",
     exampleZh: "分数列表.切片(0, 2)",
     exampleJs: "分数列表.slice(0, 2)",
     completion: "切片(${1:开始}, ${2:结束})"

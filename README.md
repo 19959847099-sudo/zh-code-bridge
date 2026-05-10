@@ -62,9 +62,15 @@ console.log(判断成绩(80));
 - `examples/score.zhjs`：函数、条件判断、返回、打印
 - `examples/string-array.zhjs`：字符串方法、数组方法、点号方法调用
 - `examples/json-math.zhjs`：JSON、Math、Date、对象入口
-- `examples/error.zhjs`：错误解释能力
+- `examples/error.zhjs`：预期失败示例，用于查看错误解释能力
 
 `examples/*.js` 是插件生成产物，不进入 Git。
+
+## 当前已知限制
+
+- 模板字符串会整体保护，`${...}` 内部表达式中的中文入口词暂不转译。
+- `examples/error.zhjs` 会故意触发 `ReferenceError`，用于确认中文解释和原始英文错误是否同时显示。
+- `.zhjs` 是学习入口文件，最终运行和迁移目标仍然是标准 JavaScript。
 
 ## Development
 

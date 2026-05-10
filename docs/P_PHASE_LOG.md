@@ -36,8 +36,8 @@ P 阶段：Prototype / 原型阶段
 
 ## 已知问题
 
-- 模板字符串当前在 scanner 中整体作为 string 保护，`${...}` 内表达式不会被转译，后续可在 Beta 阶段评估是否细化。
-- Hover / Completion 的排序和展示仍是基础实现，后续可根据真实体验打磨。
+- 模板字符串当前在 scanner 中整体作为 string 保护，`${...}` 内表达式不会被转译；B1-F 已用测试锁定为 V0.1 已知限制。
+- Hover / Completion 已在 B2-U 做过聚合、排序和多场景展示打磨，仍建议继续做真实 UI 手动验收。
 - 错误解释只覆盖 `ReferenceError / SyntaxError / TypeError`，不是完整诊断系统。
 - TextMate grammar 只做主要入口词基础高亮，不是完整语法高亮。
 - `.vsix` 作为最终 V0.1 产物需要在 Release 阶段再次正式打包确认。
